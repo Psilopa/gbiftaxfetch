@@ -1,0 +1,23 @@
+[taxonomy]
+# Used to limit GBIF search to a certain class
+class = "Insecta" 
+
+[excel]
+col_taxon_name = "MYGathering[0][MYUnit][0][MYIdentification][0][MYTaxon]"
+col_taxon_author = "MYGathering[0][MYUnit][0][MYIdentification][0][MYAuthor]"
+col_taxon_rank = "MYGathering[0][MYUnit][0][MYIdentification][0][MYTaxonRank]"
+
+# Where to add a family column. Integer (1 = first column etc)
+# COmment out for no output
+add_gbifname_column_at = 1
+
+add_family_column_at = 1
+gbifname_column_title = "GBIF taxon name"
+family_column_title = "GBIF family"
+
+[gbif]
+# flush_GBIF_cache: set to 1 to clear local copy of GBIF data file. Rebuilding it will be slow!
+flush_GBIF_cache = false
+cachefile = "P:/h978/insect/Kahanpää/SMALL_TOOLS/gbif_taxon_fetch/gbifcache.dat"
+
+
