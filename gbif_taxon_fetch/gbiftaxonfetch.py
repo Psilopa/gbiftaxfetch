@@ -8,13 +8,13 @@ paleblue = Color(indexed=44)
 
 class kotka_excel:
     """First row, first col = 1"""
-    def __init__(self,filename):     
+    def __init__(self,filename,first_data_line):     
         self.fp = Path(filename)
         self.wb = openpyxl.load_workbook(self.fp)
         self.sheet = self.wb.active
         self.name2col = {}
         self._update_name2column()
-        self.crow = 3 # Current row: skip the first two header lines
+        self.crow = first_data_line # Current row: skip the first two header lines
     def _getcell(self,colno,rowno): # Get value
         return self.sheet.cell(column=colno,row=rowno).value 
     def _getncell(self,colname,rowno): # Get value by column name
@@ -137,6 +137,7 @@ if __name__ == '__main__':
         col_rank = conf["excel"]["col_taxon_rank"]
         col_family = conf["excel"]["family_column_title"]
         col_gbifname = conf["excel"]["gbifname_column_title"]
+        firstdataline = conf["excel"]["first_data_line"]
         if ( len(sys.argv) <= 1 ): 
             print("No input data file, exiting...")
             sys.exit()
@@ -154,7 +155,7 @@ if __name__ == '__main__':
         gbifsource.open()
         # Loop over input files
         for inputfn in sys.argv[1:]:
-            kfile = kotka_excel(inputfn)
+            kfile = kotka_excel(inputfn,firstdataline)
             col_add_pos = conf["excel"].get("add_gbifname_column_at", None)
             if col_add_pos is not None:
                 kfile.addcolumn(col_add_pos,col_gbifname)
@@ -196,7 +197,7 @@ if __name__ == '__main__':
 def goodbye(): # Close open files
         if gbifsource: gbifsource.close()
         if kfile: kfile.close()
+
 # TODO: 
-# Write README
 # CALL LAJITIETOKESKUS API (need permission)
 # CALL GBIF API for laji.fi failed cases 
